@@ -137,7 +137,7 @@ label3="$borderBar  $(color $statsLabelColor "Memory........:") $label3$borderBa
 label4="$(extend "$(df -h ~ | awk 'NR==2 { printf "Total: %sB, Used: %sB, Free: %sB",$2,$3,$4; }')")"
 label4="$borderBar  $(color $statsLabelColor "Home space....:") $label4$borderBar"
 
-label5="$(extend "$(/opt/vc/bin/vcgencmd measure_temp | cut -c "6-9")ºC")"
+label5="$(extend "$(/opt/vc/bin/vcgencmd measure_temp | cut -c "6-9")ÂºC")"
 label5="$borderBar  $(color $statsLabelColor "CPU Temp......:") $label5$borderBar"
 
 labeleth0="$(extend "$(ifconfig eth0 | grep "inet ad" | cut -f2 -d: | awk '{print $1}')")"
@@ -146,7 +146,7 @@ labeleth0="$borderBar  $(color $statsLabelColor "IP of eth0....:") $labeleth0$bo
 label10="$(extend "$(wget -q -O - http://icanhazip.com/ | tail)")"
 label10="$borderBar  $(color $statsLabelColor "IP of WAN.....:") $label10$borderBar"
 
-varJson="$(curl -s 'http://api.openweathermap.org/data/2.5/weather?lat=45.96&lon=24.67&units=metric&APPID=41c1725abb919968d54304bd333b8115' | jq -r '.')"
+varJson="$(curl -s 'http://api.openweathermap.org/data/2.5/weather?lat=45.96&lon=24.67&units=metric&APPID=yourfreekey' | jq -r '.')"
 
 varTemp=$(<<<"$varJson" jq -r '. | .main.temp')
 
