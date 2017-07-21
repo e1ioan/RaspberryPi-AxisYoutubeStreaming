@@ -283,4 +283,4 @@ For that, you can get all the files necessary from here.
 
 Here is how it will look if everything works the way it should:
 
-![Alt text](http://full/path/to/img.jpg "The picure should be here")
+![Picture](https://raw.githubusercontent.com/e1ioan/RaspberryPi-AxisYoutubeStreaming/master/fps.png "The picure should be here")
