@@ -166,7 +166,8 @@ and make it look like this:
 port=80
 
 # Which user mini_httpd should use?
-user=nobody
+#user=nobody
+user=pi
 
 # Run in chroot mode?
 #chroot # yes
