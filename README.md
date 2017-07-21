@@ -284,6 +284,13 @@ For that, you can get all the files necessary from here. Copy all files from www
 chmod +x script.sh 
 ```
 
+Restart your Pi:
+```
+sudo reboot
+```
+
+... and check to see if everything works fine by going to http://your-pi-IP
+
 
 Here is how it will look if everything works the way it should:
 
