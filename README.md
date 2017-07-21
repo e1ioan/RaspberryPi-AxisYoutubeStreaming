@@ -278,5 +278,9 @@ To create a png image with a graph of FPS over a period of time, use
 rrdtool graph /home/pi/graph.png -s 'now - 1 days' -e 'now' DEF:FPS=/home/pi/data/fps_db.rrd:fps:MAX LINE1:FPS#FF0000:Average_FPS
 ```
 
-Now, let's combine mini-httpd, cgi-bin, rrdtool to get everything on the web.
+Now, let's combine mini-httpd, cgi-bin, rrdtool to get everything on the web!
+For that, you can get all the files necessary from here.
 
+Here is how it will look if everything works the way it should:
+
+![Alt text](http://full/path/to/img.jpg "The picure should be here")
