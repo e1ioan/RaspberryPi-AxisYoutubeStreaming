@@ -279,7 +279,11 @@ rrdtool graph /home/pi/graph.png -s 'now - 1 days' -e 'now' DEF:FPS=/home/pi/dat
 ```
 
 Now, let's combine mini-httpd, cgi-bin, rrdtool to get everything on the web!
-For that, you can get all the files necessary from here.
+For that, you can get all the files necessary from here. Copy all files from www to ```~/www```, all the files from www/cgi-bin to ```~/www/cgi-bin```, all the files from "scripts" to ```~/scripts```. Run the following command for each script from ```~/scripts``` and from ```~/www/cgi-bin```:
+```
+chmod +x script.sh 
+```
+
 
 Here is how it will look if everything works the way it should:
 
