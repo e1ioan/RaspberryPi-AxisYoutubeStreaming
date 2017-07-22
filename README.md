@@ -81,7 +81,7 @@ Now that the ffmpeg is installed, you can start streaming:
 
 Put is in a script that will restart the process if it dies. Use nano:
 ```
-nano youtubeStreaming.sh
+nano ~/youtubeStreaming.sh
 ```
 Paste the following code in nano (replace your IP, login, password, and youtube live key)
 ```
@@ -92,6 +92,11 @@ do
   /home/pi/FFMpeg/ffmpeg  -f lavfi -i anullsrc -rtsp_transport tcp -i rtsp://user:password@camera-ip:554/axis-media/media.amp -vcodec copy -codec:a aac -f flv -r 30 -s 640x480 "rtmp://a.rtmp.youtube.com/live2/<youtube-live-key>"
 sleep 2
 done
+```
+
+Make it executable:
+```
+chmod +x ~/youtubeStreaming.sh
 ```
 
 Save it and then add it to crontab to start it at boot:
