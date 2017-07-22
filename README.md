@@ -148,7 +148,9 @@ sudo apt-get install rrdtool
 ```
 
 ```mini_httpd``` - a small webserver that works perfect on Rasperry Pi
+
 ```haserl``` - a cgi scripting program for embedded environments (very easy to use)
+
 ```rrdtool``` - high performance data logging and graphing system
 
 Configure mini_httpd by editing /etc/mini-httpd.conf
