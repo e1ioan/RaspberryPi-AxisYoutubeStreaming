@@ -76,12 +76,7 @@ Some things to keep in mind:
 
 Now that the ffmpeg is installed, you can start streaming:
 ```
-/home/pi/FFMpeg/ffmpeg  -f lavfi -i anullsrc -rtsp_transport tcp -i rtsp://user:password@camera-ip:554/axis-media/media.amp -vcodec copy -codec:a aac -f flv -r 30 -s 640x480 "rtmp://a.rtmp.youtube.com/live2/<youtube-live-key>"
-```
-
-... or even better command:
-```
-/home/pi/FFMpeg/ffmpeg -f lavfi -i anullsrc -thread_queue_size 512 -rtsp_transport tcp -i rtsp://login:password@camera-ip:554/axis-media/media.amp  -vcodec copy -codec:a aac -pix_fmt yuvj420p -f flv -r 30  "rtmp://a.rtmp.youtube.com/live2/<key>"
+/home/pi/FFMpeg/ffmpeg -f lavfi -i anullsrc -thread_queue_size 512 -rtsp_transport tcp -i rtsp://login:pass@your-camera-ip:554/axis-media/media.amp -vcodec copy -codec:a aac  -f flv  -r 30 "rtmp://a.rtmp.youtube.com/live2/youtube-live-key"
 ```
 
 Put is in a script that will restart the process if it dies. Use nano:
@@ -94,7 +89,7 @@ Paste the following code in nano (replace your IP, login, password, and youtube 
 
 while true
 do
-  /home/pi/FFMpeg/ffmpeg  -f lavfi -i anullsrc -rtsp_transport tcp -i rtsp://user:password@camera-ip:554/axis-media/media.amp -vcodec copy -codec:a aac -f flv -r 30 -s 640x480 "rtmp://a.rtmp.youtube.com/live2/<youtube-live-key>"
+  /home/pi/FFMpeg/ffmpeg -f lavfi -i anullsrc -thread_queue_size 512 -rtsp_transport tcp -i rtsp://login:pass@your-camera-ip:554/axis-media/media.amp -vcodec copy -codec:a aac  -f flv  -r 30 "rtmp://a.rtmp.youtube.com/live2/youtube-live-key"
 sleep 2
 done
 ```
@@ -235,9 +230,17 @@ To log fps average will use rrdtool. Change the youtubeStreaming.sh to look like
 ```
 #!/bin/bash
 
+fps_db="/home/pi/data/fps_db.rrd"
+
+# if the rrdtool database is doesn't exist, create it
+if [ ! -e "$fps_db" ]; then
+	/usr/bin/rrdtool create $fps_db --step 60 DS:fps:GAUGE:120:0:60 RRA:MAX:0.5:1:10080
+fi
+
+
 while true
 do
-  /home/pi/FFMpeg/ffmpeg -f lavfi -i anullsrc -thread_queue_size 512 -rtsp_transport tcp -i rtsp://login:pass@camera-ip:554/axis-media/media.amp  -vcodec copy -codec:a aac -pix_fmt yuvj420p -f flv -r 30  "rtmp://a.rtmp.youtube.com/live2/youtube-live-key" 2> >(
+  /home/pi/FFMpeg/ffmpeg -f lavfi -i anullsrc -thread_queue_size 512 -rtsp_transport tcp -i rtsp://login:pass@your-camera-ip:554/axis-media/media.amp -vcodec copy -codec:a aac  -f flv  -r 30 "rtmp://a.rtmp.youtube.com/live2/youtube-live-key" 2> >(
 		counter=0
 		sumFPS=0
 		averageFPS=0
@@ -254,45 +257,39 @@ do
 					lastLog="$nowMinute"
 					# printf '%s\t%s\n' $(date +"%Y-%m-%d-%H") "$averageFPS" >> /home/pi/data/logfile
 					# save to database, N means now
-					rrdtool update /home/pi/data/fps_db.rrd N:$averageFPS
+					rrdtool update $fps_db N:$averageFPS
 					#echo "$averageFPS"
 					# after saving the average, reset the values
 			                counter=0
 			                sumFPS=0
+					averageFPS=0
 				fi
 				#printf >&2 'fps: %s count: %s sum: %s average: %s\n' "$fps" "$counter" "$sumFPS" "$averageFPS"
 			fi
 		done
 	)
+
   sleep 2
 done
-
-```
-
-Create the rrdtool database:
-```
-mkdir ~/data
-rrdtool create /home/pi/data/fps_db.rrd --step 60 DS:fps:GAUGE:120:0:60 RRA:MAX:0.5:1:525600
-
-# --step 60 = we write in every 60 seconds
-# DS - dataset type
-# fps - our field
-# GAUGE - the value in our field should be kept the way it is
-# 120 - time out, if data is not inserted in 120s, insert 0
-# 0 - min value
-# 60 - max value
 ```
 
 Restart the Pi to have the new script write data in the database.
 
 To query the database, you can use
 ```
-rrdtool fetch /home/pi/data/fps_db.rrd MAX -s 'now - 2 hours' -e 'now'
+#!/bin/bash
+
+fps_db="/home/pi/data/fps_db.rrd"
+/usr/bin/rrdtool fetch $fps_db MAX -s 'now - 2 hours' -e 'now'
 ```
 
 To create a png image with a graph of FPS over a period of time, use
 ```
-rrdtool graph /home/pi/graph.png -s 'now - 1 days' -e 'now' DEF:FPS=/home/pi/data/fps_db.rrd:fps:MAX LINE1:FPS#FF0000:Average_FPS
+#!/bin/bash
+
+fps_db="/home/pi/data/fps_db.rrd"
+
+/usr/bin/rrdtool graph /home/pi/www/graph.png --slope-mode --full-size-mode --right-axis 1:0 --x-grid MINUTE:10:HOUR:1:HOUR:2:0:%a/%H --width 900 --height 400  -s 'now - 30 hours' -e 'now' DEF:FPS=$fps_db:fps:MAX LINE2:FPS#FF0000:Average_FPS
 ```
 
 Now, let's combine mini-httpd, cgi-bin, rrdtool to get everything on the web!
