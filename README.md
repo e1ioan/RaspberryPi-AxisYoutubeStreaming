@@ -1,8 +1,13 @@
 # Stream live video to youtube using a Raspberry Pi and an Axis IP camera
 
-1) Get a RasperyPi (I'm using Raspberry Pi 3 model b)
-2) Download Noobs (https://www.raspberrypi.org/downloads/noobs/) unzip it, copy everything on a sd card and boot your Pi.
-3) Install Raspbian
+Do you have an H.264 capable IP camera that you want to live stream on your youtube channel? Here is how to do it.
+
+1) Connect your IP camera to your local network, and make a note of the IP (the IP is needed in the ffmpeg command)
+2) Get a RasperyPi (I'm using Raspberry Pi 3 model b)
+3) Download Noobs (https://www.raspberrypi.org/downloads/noobs/) unzip it, copy everything on a sd card and boot your Pi.
+4) Connect the Raspery Pi to the same network where the IP camera resides
+5) Install Raspbian
+
 
 This will take a few minutes. When done, you'll have to download and compile the ffmjpeg from source with Hardware Accelerated x264 Encoding. Here are the steps:
 
