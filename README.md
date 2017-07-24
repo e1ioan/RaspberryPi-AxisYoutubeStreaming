@@ -8,9 +8,15 @@ Do you have an H.264 capable IP camera that you want to live stream on your yout
 4) Connect the Raspery Pi to the same network where the IP camera resides
 5) Install Raspbian
 
+If your camera supports H.264, you can just install ```ffmpeg``` l:
+```
+sudo apt-get install ffmpeg
+```
 
-This will take a few minutes. When done, you'll have to download and compile the ffmjpeg from source with Hardware Accelerated x264 Encoding. Here are the steps:
+__________________________
+**NOTE: if you installed ffmpeg using the command above, you don't have to compile and install ffmpeg by yourself, so you can skip the this section.**
 
+If you want to ```ffmpeg``` compile it by yourself to enable Hardware Accelerated x264 Encoding. Here are the steps:
 Open terminal and type in the following commands some of them might need "sudo":
 
 First we need to install all of the dependencies required to compile FFMpeg, as well as the standard tools for compiling programs (gcc, automake, etc.)
@@ -73,6 +79,10 @@ Some things to keep in mind:
 1) This encoder is VERY basic, it does not include all of the bells and whistles that libx264 has, you're basically able to scale the video and lower or increase the bitrate, that's pretty much it.
 2) To my knowledge, there's no GUI program that supports this feature, so you're stuck encoding on the command line.
 3) The use of ANY kind of scaling or filters will drastically slow down the encode because it uses the RPi's CPU.
+
+_______________________
+
+# Streaming your IP Camera
 
 Now that the ffmpeg is installed, you can start streaming:
 ```
