@@ -3,7 +3,7 @@ content-type: text/html
 
 <html>
 <head>
-<meta http-equiv="refresh" content="60">
+<meta charset="UTF-8">
 </head>
 <body>
 <center>
