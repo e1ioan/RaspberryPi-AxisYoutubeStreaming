@@ -1,6 +1,6 @@
 #!/bin/bash
 
-varJson="$(curl -s 'http://api.openweathermap.org/data/2.5/weather?lat=45.96&lon=24.67&units=metric&APPID=<your-key>' | jq -r '.')"
+varJson="$(curl -s 'http://api.openweathermap.org/data/2.5/weather?lat=45.96&lon=24.67&units=metric&lang=ro&APPID=<your-key>' | jq -r '.')"
 varTemp=$(<<<"$varJson" jq -r '. | .main.temp')
 varTempF=$(echo "scale=2;((9/5) * $varTemp) + 32" |bc)
 varWeather=$(<<<"$varJson" jq -r '. | .weather[0].main')
