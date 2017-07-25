@@ -5,9 +5,8 @@ varTemp=$(<<<"$varJson" jq -r '. | .main.temp')
 varTempF=$(echo "scale=2;((9/5) * $varTemp) + 32" |bc)
 varWeather=$(<<<"$varJson" jq -r '. | .weather[0].main')
 varWeatherDescription=$(<<<"$varJson" jq -r '. | .weather[0].description')
-
 # this replaces romanian chars with the en equivalent
-varWeatherDescription=$(echo $varWeatherDescription | iconv -f utf-8 -t us-ascii//TRANSLIT)
+varWeatherDescriptionNoRoChar=$(echo "$varWeatherDescription" | iconv -f utf-8 -t us-ascii//TRANSLIT)
 
 varIcon=$(<<<"$varJson" jq -r '. | .weather[0].icon')
 labelPlace=$(<<<"$varJson" jq -r '. | .name')
@@ -17,7 +16,7 @@ labelCountry=$(<<<"$varJson" jq -r '. | .sys.country')
 labelPlace="Barghis"
 
 if [[ $1 == "overlay" ]]; then
-	labelWeather="$(echo "$labelPlace - $labelCountry: $varTemp'C ($varTempF F) - $varWeather ($varWeatherDescription)")"
+	labelWeather="$(echo "$labelPlace - $labelCountry: $varTemp'C ($varTempF F) - $varWeather ($varWeatherDescriptionNoRoChar)")"
 	echo $labelWeather
 else
 	labelWeather="$(echo "<b>$labelPlace - $labelCountry:</b> $varTemp'C ($varTempF F) - $varWeather ($varWeatherDescription)")"
