@@ -323,3 +323,20 @@ Here is how it will look if everything works the way it should:
 The Youtube Live Stream from the camera I'm doing the tests on, is here:
 
 https://www.youtube.com/channel/UCRgTyO_8qEkCrEyv-sh2c3w/live
+
+# Camera overlay (time/weather)
+
+To show weather and time/date in the camera stream (also FPS) use the ```streamWeather.sh``` script. Make it executable
+```
+chmod +x streamWeather.sh
+```
+
+... and add it to the crontab to run it every 5 minutes:
+```
+sudo nano /etc/crontab
+```
+
+add at the end of the file:
+```
+*/5 *   * * *   root    /home/pi/scripts/streamWeather.sh
+```
