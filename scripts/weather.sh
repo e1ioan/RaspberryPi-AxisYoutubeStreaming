@@ -7,7 +7,7 @@ varWeather=$(<<<"$varJson" jq -r '. | .weather[0].main')
 varWeatherDescription=$(<<<"$varJson" jq -r '. | .weather[0].description')
 
 # this replaces romanian chars with the en equivalent
-varWeatherDescription=$(echo $varWeatherDescription | iconv -f utf-8 -t us-asci$
+varWeatherDescription=$(echo $varWeatherDescription | iconv -f utf-8 -t us-ascii//TRANSLIT)
 
 varIcon=$(<<<"$varJson" jq -r '. | .weather[0].icon')
 labelPlace=$(<<<"$varJson" jq -r '. | .name')
