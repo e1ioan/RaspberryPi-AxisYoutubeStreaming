@@ -320,9 +320,6 @@ Here is how it will look if everything works the way it should:
 
 ![Picture](https://raw.githubusercontent.com/e1ioan/RaspberryPi-AxisYoutubeStreaming/master/fps.png "The picure should be here")
 
-The Youtube Live Stream from the camera I'm doing the tests on, is here:
-
-https://www.youtube.com/channel/UCRgTyO_8qEkCrEyv-sh2c3w/live
 
 # Camera overlay (time/weather)
 
