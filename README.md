@@ -1,4 +1,4 @@
-# Stream live video to youtube using a Raspberry Pi and an Axis IP camera
+# Stream live video to youtube using a Raspberry Pi and an IP camera
 
 Do you have an H.264 capable IP camera that you want to live stream on your youtube channel? Here is how to do it.
 
