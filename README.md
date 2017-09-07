@@ -1,3 +1,5 @@
+**NOTE: if you need professional grade streaming, you should take a look at https://camstreamer.com/ . They provide an application that installs on your IP camera and you can do live streaming 24/7 without aditional hardware.**
+
 # Stream live video to youtube using a Raspberry Pi and an IP camera
 
 Do you have an H.264 capable IP camera that you want to live stream on your youtube channel? Here is how to do it.
