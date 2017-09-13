@@ -159,7 +159,7 @@ Restart the sshd service.
 
 Install mini_httpd and haserl on your Raspberry Pi:
 ```
-sudo apt-get install mini_httpd
+sudo apt-get install mini-httpd
 sudo apt-get install haserl
 sudo apt-get install rrdtool
 ```
